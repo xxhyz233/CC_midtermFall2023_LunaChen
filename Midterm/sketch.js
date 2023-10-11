@@ -6,5 +6,8 @@ function setup()
 
 function draw()
 {
-    rect(0,0, 100, 100);
+    background(0);
+    fill(255,0,0);
+    noStroke();
+    ellipse(mouseX, mouseY, 50, 50);
 }
