@@ -1,103 +1,33 @@
-let xPos = 400;
-let yPos = 400;
-let ySpeed = 0;
-let Accel = 0.5;
-
-let diameter = 50;
-let rWidth = 50;
-let rHeight = 50;
-
-class Physical
-{
-    constructor(xPos, yPos, diameter)
-    {
-        this.xPos = xPos;
-        this.yPos = yPos;
-        this.diameter = diameter;
-        this.ySpeed = ySpeed;
-    }
-
-    drop()
-    {
-        this.ySpeed = this.ySpeed + Accel;
-
-        this.yPos = this.yPos + this.ySpeed;
-
-        if (this.yPos + this.diameter/2 > height)
-        {
-            this.ySpeed = -this.ySpeed;
-            this.yPos = height - this.diameter/2;
-        }
-
-        this.ySpeed = this.ySpeed * 0.997;
-    }
-}
-
-class PhysEllipse extends Physical
-{
-    constructor(xPos, yPos, diameter)
-    {
-        super(xPos,yPos);
-        this.diameter = diameter;
-    }
-
-    drop()
-    {
-        this.ySpeed = this.ySpeed + Accel;
-
-        this.yPos = this.yPos + this.ySpeed;
-
-        if (this.yPos + this.diameter/2 > height)
-        {
-            this.ySpeed = -this.ySpeed;
-            this.yPos = height - this.diameter/2;
-        }
-
-        this.ySpeed = this.ySpeed * 0.997;
-        ellipse(this.xPos, this.yPos, this.diameter);
-    }
-}
-
-class PhysRect extends Physical
-{
-    constructor (xPos, yPos, rWidth, rHeight)
-    {
-        super(xPos, yPos);
-        this.rWidth = rWidth;
-        this.rHeight = rHeight;
-    }
-
-    drop()
-    {
-        this.ySpeed = this.ySpeed + Accel;
-
-        this.yPos = this.yPos + this.ySpeed;
-
-        if ((this.yPos + this.rWidth > width) || (this.yPos + this.rHeight > height))
-        {
-            this.ySpeed = -this.ySpeed;
-            this.yPos = height - this.rHeight;
-        }
-
-        this.ySpeed = this.ySpeed * 0.997;
-        rect(this.xPos, this.yPos, this.rWidth, this.rHeight);
-    }
-}
-
-let ball1 = new PhysEllipse(400,400,60);
-let rect1 = new PhysRect(400,400,80,80);
+let b;
+let b2;
+let b3;
 
 function setup()
 {
-    createCanvas(800,800);
+  createCanvas(800,800);
+  b = new Ball(400,400, -0.001, 0.01);
+  b2 = new Ball(0,0, .001, .01);
+  b3 = new Ball(200,200, .002, -.01);
+  b4 = new Ball(500,500, -0.001, 0.03);
 }
 
 function draw()
 {
-    background(0);
-    fill(200,0,0);
-    ball1.drop();
-    rect1.drop();
-    
+  background(20);
+  b.update();
+  b.checkEdges();
+  b.display();
+
+  b2.update();
+  b2.checkEdges();
+  b2.display();
+
+  b3.update();
+  b3.checkEdges();
+  b3.display();
+
+  b4.update();
+  b4.checkEdges();
+  b4.display();
 }
 
