@@ -36,11 +36,13 @@ class Ball
     if(this.position.x > width)
     {
       print('Before: ' + this.velocity.x);
+      this.position.x = width;
       this.velocity.x *= -1;
       print('After: ' + this.velocity.x);
     }
     if(this.position.x < 0)
     {
+        this.position.x = 0;
       this.velocity.x *= -1;
     }
     if(this.position.y > height)
@@ -57,6 +59,6 @@ class Ball
 
   checkCollision()
   {
-    
+
   }
 }
