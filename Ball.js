@@ -1,17 +1,27 @@
+// rule defines how the physics work (Sticky, Bouncy etc...)
+let rule = 0;
+let airRes = 0.997;
 class Ball
 {
-  constructor(x,y, ax, ay)
+  constructor(x,y, ax, ay, r)
   {
     this.position = new createVector(x, y);
     this.velocity = new createVector(0, 0);
     this.acceleration = new createVector(ax, ay);
     this.mass = 1;
+    this.rule = r;
+  }
+
+  setRule(r)
+  {
+    this.rule = r;
   }
 
   update()
   {
     this.velocity.add(this.acceleration);
     this.position.add(this.velocity);
+    this.velocity.limit(100);
     // Use v1.limit(max) to limit the velocity
 
   }
@@ -33,28 +43,54 @@ class Ball
 
   checkEdges()
   {
-    if(this.position.x > width)
+    if(this.rule === 0)
     {
-      print('Before: ' + this.velocity.x);
-      this.position.x = width;
-      this.velocity.x *= -1;
-      print('After: ' + this.velocity.x);
+      if(this.position.x > width)
+      {
+        this.position.x = width;
+        this.velocity.x *= -1;
+      }
+      if(this.position.x < 0)
+      {
+          this.position.x = 0;
+        this.velocity.x *= -1;
+      }
+      if(this.position.y > height)
+      {
+        this.position.y = height;
+        this.velocity.y *= -1;
+      }
+      if(this.position.y < 0)
+      {
+        this.position.y = 0;
+        this.velocity.y *= -1;
+      }
     }
-    if(this.position.x < 0)
+
+    if(this.rule === 1)
     {
-        this.position.x = 0;
-      this.velocity.x *= -1;
+      if(this.position.x > width)
+      {
+        this.position.x = width;
+        this.velocity.x *= 0;
+      }
+      if(this.position.x < 0)
+      {
+          this.position.x = 0;
+        this.velocity.x *= 0;
+      }
+      if(this.position.y > height)
+      {
+        this.position.y = height;
+        this.velocity.y *= 0;
+      }
+      if(this.position.y < 0)
+      {
+        this.position.y = 0;
+        this.velocity.y *= 0;
+      }
     }
-    if(this.position.y > height)
-    {
-      this.position.y = height;
-      this.velocity.y *= -1;
-    }
-    if(this.position.y < 0)
-    {
-      this.position.y = 0;
-      this.velocity.y *= -1;
-    }
+
   }
 
   checkCollision()
